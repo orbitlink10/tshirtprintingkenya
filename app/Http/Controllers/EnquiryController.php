@@ -20,7 +20,7 @@ class EnquiryController extends Controller
             'name' => ['required', 'string', 'max:120'],
             'email' => ['nullable', 'email', 'max:190', 'required_without:phone'],
             'phone' => ['nullable', 'string', 'max:40', 'required_without:email'],
-            'service' => ['required', 'string', 'in:Bulk T-shirt printing,Corporate T-shirt branding,Event T-shirt printing,T-shirt printing prices,Other T-shirt printing or branding,Not sure yet'],
+            'service' => ['required', 'string', 'in:Bulk T-shirt printing,Corporate T-shirt branding,Event T-shirt printing,T-shirt printing prices,Other T-shirt printing or branding,Business stationery,Banners and signage,Promotional items,Not sure yet'],
             'quantity' => ['nullable', 'integer', 'min:1', 'max:1000000'],
             'garment' => ['nullable', 'string', 'max:120'],
             'placement' => ['nullable', 'string', 'max:80'],
@@ -106,3 +106,4 @@ class EnquiryController extends Controller
         ]);
     }
 }
+

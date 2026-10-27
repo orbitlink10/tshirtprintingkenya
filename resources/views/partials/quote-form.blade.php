@@ -5,6 +5,9 @@
         'Event T-shirt printing',
         'T-shirt printing prices',
         'Other T-shirt printing or branding',
+        'Business stationery',
+        'Banners and signage',
+        'Promotional items',
         'Not sure yet',
     ];
     $placements = [
@@ -13,11 +16,14 @@
         'Left chest',
         'Sleeve',
         'Multiple positions',
+        'Business stationery',
+        'Banners and signage',
+        'Promotional items',
         'Not sure yet',
     ];
 @endphp
 <div class="quote-form-wrap">
-    <h2 class="h3 fw-bold mb-2" id="quote-form-title">Request a T-shirt printing quote</h2>
+    <h2 class="h3 fw-bold mb-2" id="quote-form-title">Request a printing quote</h2>
     <p class="text-muted mb-4">The more detail you share, the more accurate the quote. If you are missing a detail, send what you have and we will confirm the rest.</p>
     <form method="post" action="{{ route('enquiries.store') }}" enctype="multipart/form-data">
         @csrf
@@ -56,8 +62,8 @@
                 @error('quantity')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
             <div class="col-md-4">
-                <label class="form-label" for="enquiry-garment">Garment preference</label>
-                <input class="form-control @error('garment') is-invalid @enderror" id="enquiry-garment" name="garment" type="text" value="{{ old('garment') }}" placeholder="Style, fabric or colour, if known">
+                <label class="form-label" for="enquiry-garment">Material or garment preference</label>
+                <input class="form-control @error('garment') is-invalid @enderror" id="enquiry-garment" name="garment" type="text" value="{{ old('garment') }}" placeholder="Material, style or colour, if known">
                 @error('garment')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
             <div class="col-md-4">
@@ -88,7 +94,7 @@
             </div>
             <div class="col-12">
                 <label class="form-label" for="enquiry-message">Order details</label>
-                <textarea class="form-control @error('message') is-invalid @enderror" id="enquiry-message" name="message" rows="5" placeholder="Tell us about the T-shirts, sizes, colours, print idea, event date or anything else that affects the order.">{{ old('message') }}</textarea>
+                <textarea class="form-control @error('message') is-invalid @enderror" id="enquiry-message" name="message" rows="5" placeholder="Tell us about your product, dimensions, colours, design and anything else we should know.">{{ old('message') }}</textarea>
                 @error('message')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
             <div class="d-none" aria-hidden="true">
@@ -102,3 +108,4 @@
         </div>
     </form>
 </div>
+

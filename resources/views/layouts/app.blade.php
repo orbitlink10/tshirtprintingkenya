@@ -30,7 +30,7 @@
     <meta name="twitter:title" content="{!! $titleText !!}">
     <meta name="twitter:description" content="{!! $metaDescription !!}">
     <meta name="twitter:image" content="{!! $ogImage !!}">
-    <meta name="theme-color" content="#0f9f6e">
+    <meta name="theme-color" content="#683bb3">
     <title>{!! $titleText !!}</title>
     <link rel="preconnect" href="https://images.unsplash.com">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -119,6 +119,7 @@
             .section { padding:40px 0; }
         }
     </style>
+    <link rel="stylesheet" href="{{ asset('print-theme.css') }}?v=1">
     @stack('head')
     <script type="application/ld+json">
         {!! json_encode([
@@ -137,6 +138,7 @@
 </head>
 <body>
 <a class="visually-hidden-focusable position-absolute top-0 start-0 p-2 bg-white text-dark" href="#main-content">Skip to content</a>
+<div class="utility-bar"><div class="container"><span><i class="bi bi-palette"></i> Custom printing &amp; branding in Kenya</span><span>Business essentials. Event branding. Everyday impact.</span></div></div>
 <nav class="navbar navbar-expand-lg bg-white sticky-top" aria-label="Main navigation">
     <div class="container">
         <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="{{ route('home') }}"><span class="brand-mark">TPK</span> T-Shirt Printing Kenya</a>
@@ -145,9 +147,9 @@
             <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
                 <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Home</a></li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="{{ url('/services') }}" role="button" data-bs-toggle="dropdown" aria-expanded="false">Services</a>
+                    <a class="nav-link dropdown-toggle" href="{{ url('/services') }}" role="button" data-bs-toggle="dropdown" aria-expanded="false">What we print</a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{{ url('/services') }}">All T-shirt printing services</a></li>
+                        <li><a class="dropdown-item" href="{{ url('/services') }}">T-shirt printing services</a></li>
                         <li><a class="dropdown-item" href="{{ url('/services/bulk-t-shirt-printing') }}">Bulk T-shirt printing</a></li>
                         <li><a class="dropdown-item" href="{{ url('/services/corporate-t-shirt-branding') }}">Corporate T-shirt branding</a></li>
                         <li><a class="dropdown-item" href="{{ url('/services/event-t-shirt-printing') }}">Event T-shirt printing</a></li>
@@ -155,7 +157,7 @@
                         <li><a class="dropdown-item" href="{{ url('/t-shirt-printing-prices') }}">T-shirt printing prices</a></li>
                     </ul>
                 </li>
-                <li class="nav-item"><a class="nav-link" href="{{ url('/t-shirt-printing-prices') }}">Pricing</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('home') }}#products">Products</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('/blog') }}">Guides</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('/about') }}">About</a></li>
                 @auth
@@ -167,7 +169,7 @@
                                 <li><a class="dropdown-item" href="{{ route('admin.pages') }}">Pages</a></li>
                                 <li><a class="dropdown-item" href="{{ route('admin.enquiries.index') }}">Quote Requests</a></li>
                                 <li><a class="dropdown-item" href="{{ route('admin.homepage.edit') }}">Homepage Content</a></li>
-                                <li><a class="dropdown-item" href="{{ route('admin.services.index') }}">Services</a></li>
+                                <li><a class="dropdown-item" href="{{ route('admin.services.index') }}">What we print</a></li>
                                 <li><a class="dropdown-item" href="{{ route('bookings.index') }}">Bookings</a></li>
                                 <li><a class="dropdown-item" href="{{ route('admin.reports.index') }}">Reports</a></li>
                             </ul>
@@ -196,7 +198,7 @@
             <div class="row g-4">
                 <div class="col-lg-4">
                     <a class="footer-brand" href="{{ route('home') }}"><span class="brand-mark">TPK</span><strong>T-Shirt Printing Kenya</strong></a>
-                    <p class="footer-about">Custom T-shirt printing and branding for businesses, schools, organisations, events and personal projects. We work from your brief, artwork and quantities to prepare a quote for the order.</p>
+                    <p class="footer-about">Make your mark with custom printing and branding for businesses, teams and events. From branded apparel to your next campaign, it starts with your idea.</p>
                     <ul class="footer-contact">
                         <li><i class="bi bi-geo-alt-fill"></i><span>Nairobi, Kenya</span></li>
                         <li><i class="bi bi-globe2"></i><span>Serving customers in Nairobi and across Kenya</span></li>
@@ -204,9 +206,9 @@
                     </ul>
                 </div>
                 <div class="col-lg-4">
-                    <h2 class="footer-title">T-Shirt Printing Services</h2>
+                    <h2 class="footer-title">Printing &amp; Branding</h2>
                     <ul class="footer-services">
-                        <li><i class="bi bi-chevron-right"></i><a href="{{ url('/services') }}">All T-shirt printing services</a></li>
+                        <li><i class="bi bi-chevron-right"></i><a href="{{ url('/services') }}">T-shirt printing services</a></li>
                         <li><i class="bi bi-chevron-right"></i><a href="{{ url('/services/bulk-t-shirt-printing') }}">Bulk T-shirt printing</a></li>
                         <li><i class="bi bi-chevron-right"></i><a href="{{ url('/services/corporate-t-shirt-branding') }}">Corporate T-shirt branding</a></li>
                         <li><i class="bi bi-chevron-right"></i><a href="{{ url('/services/event-t-shirt-printing') }}">Event T-shirt printing</a></li>
@@ -215,7 +217,7 @@
                 </div>
                 <div class="col-lg-4">
                     <h2 class="footer-title">Get a Quote</h2>
-                    <p class="footer-about">Tell us the quantity, garment type, print placement, artwork and required date. We will confirm the details and send a personalised quote.</p>
+                    <p class="footer-about">Share your product, quantity, artwork and required date. We will confirm the options and prepare a personalised quote.</p>
                     <a class="btn btn-brand mb-4" href="{{ url('/contact') }}">Request a Quote</a>
                     <h2 class="footer-title">Company</h2>
                     <ul class="footer-links">
@@ -234,3 +236,4 @@
 @stack('scripts')
 </body>
 </html>
+
