@@ -4,11 +4,19 @@ declare(strict_types=1);
 
 $store = __DIR__.'/../storage/app/private/pages.json';
 $publicCopy = __DIR__.'/../storage/app/pages.json';
-$backupSuffix = '.legacy-'.date('Ymd-His').'.bak';
+$backupSuffix = '.legacy-'.date('Ymd-His').'-'.bin2hex(random_bytes(4)).'.bak';
+$existingStores = [];
 
 foreach ([$store, $publicCopy] as $file) {
     if (is_file($file)) {
-        copy($file, $file.$backupSuffix);
+        $existing = json_decode(file_get_contents($file), true, 512, JSON_THROW_ON_ERROR);
+        if (! is_array($existing) || ! array_is_list($existing)) {
+            throw new RuntimeException("Invalid page list in {$file}; no content was replaced.");
+        }
+        $existingStores[$file] = $existing;
+        if (! copy($file, $file.$backupSuffix)) {
+            throw new RuntimeException("Could not back up {$file}.");
+        }
     }
 }
 
@@ -646,15 +654,31 @@ $pages = [
     ],
 ];
 
-$json = json_encode($pages, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+foreach ([$store, $publicCopy] as $file) {
+    // Preserve published edits and IDs, adding only missing slugs.
+    $merged = $existingStores[$file] ?? [];
+    $slugs = array_column($merged, 'slug');
+    $nextId = max(array_merge([0], array_column($merged, 'id'))) + 1;
+    $added = 0;
+    foreach ($pages as $page) {
+        if (in_array($page['slug'], $slugs, true)) {
+            continue;
+        }
+        $page['id'] = $nextId++;
+        $merged[] = $page;
+        $slugs[] = $page['slug'];
+        $added++;
+    }
 
-if ($json === false) {
-    fwrite(STDERR, "Could not encode pages: ".json_last_error_msg().PHP_EOL);
-    exit(1);
+    $directory = dirname($file);
+    if (! is_dir($directory) && ! mkdir($directory, 0755, true) && ! is_dir($directory)) {
+        throw new RuntimeException("Could not create {$directory}.");
+    }
+    $json = json_encode($merged, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
+    if (file_put_contents($file, $json, LOCK_EX) === false) {
+        throw new RuntimeException("Could not write {$file}.");
+    }
+    echo "Added {$added} missing pages to {$file}; existing pages preserved.".PHP_EOL;
 }
 
-file_put_contents($store, $json);
-file_put_contents($publicCopy, $json);
-
-echo 'Wrote '.count($pages)." pages to {$store} and {$publicCopy}".PHP_EOL;
 echo 'Backups use suffix: '.$backupSuffix.PHP_EOL;
